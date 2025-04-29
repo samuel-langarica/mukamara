@@ -1,16 +1,75 @@
-# mukamara
+# Mukamara
 
-A new Flutter project.
+A Flutter web application containerized with Docker.
 
-## Getting Started
+## Prerequisites
 
-This project is a starting point for a Flutter application.
+- Flutter SDK
+- Docker
 
-A few resources to get you started if this is your first Flutter project:
+## Building and Running Locally
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Build the Flutter web app:
+```bash
+flutter build web
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2. Build the Docker image:
+```bash
+docker build -t mukamara-app .
+```
+
+3. Run the container:
+```bash
+docker run -p 8080:8080 mukamara-app
+```
+
+The app will be available at http://localhost:8080
+
+## Deployment
+
+This application is containerized and ready for deployment to any cloud platform that supports Docker containers.
+
+### Environment Variables
+
+- `PORT`: The port on which the server will run (default: 8080)
+
+### Deployment Steps
+
+1. Build the Flutter web app locally:
+```bash
+flutter build web
+```
+
+2. Build the Docker image:
+```bash
+docker build -t mukamara-app .
+```
+
+3. Tag the image for your container registry:
+```bash
+docker tag mukamara-app [registry-url]/mukamara-app
+```
+
+4. Push the image to your container registry:
+```bash
+docker push [registry-url]/mukamara-app
+```
+
+5. Deploy using your cloud platform's container deployment service.
+
+## Cloud Platform Specific Instructions
+
+### Google Cloud Run
+```bash
+gcloud run deploy mukamara --image [registry-url]/mukamara-app --platform managed
+```
+
+### Heroku
+```bash
+heroku container:push web
+heroku container:release web
+```
+
+### AWS ECS
+Deploy using the AWS ECS console or AWS CLI with your task definition.
